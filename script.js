@@ -202,3 +202,64 @@ if (navToggle && mobileMenu) {
   }, { passive: true });
   scrub();
 })();
+
+/* ============================================================
+   MERIDIAN PRODUCT TOUR — real screenshots, tabs + auto-cycle
+   ============================================================ */
+(() => {
+  const stage = document.getElementById('tourStage');
+  const tabsEl = document.getElementById('tourTabs');
+  if (!stage || !tabsEl) return;
+
+  const TOUR = [
+    { file: 'dashboard',  label: 'Dashboard',  title: 'meridian / admin dashboard' },
+    { file: 'pos',        label: 'POS',        title: 'meridian / point of sale' },
+    { file: 'pos-arabic', label: 'POS Arabic', title: 'meridian / pos — arabic rtl' },
+    { file: 'inventory',  label: 'Inventory',  title: 'meridian / inventory' },
+    { file: 'analytics',  label: 'Analytics',  title: 'meridian / analytics' },
+    { file: 'reports',    label: 'Reports',    title: 'meridian / reports' },
+    { file: 'expiry',     label: 'Expiry',     title: 'meridian / expiry control' },
+    { file: 'dark-mode',  label: 'Dark mode',  title: 'meridian / dark mode' },
+  ];
+  const countEl = document.getElementById('tourCount');
+  const titleEl = document.getElementById('tourTitle');
+  const pad = n => String(n + 1).padStart(2, '0');
+
+  const imgs = TOUR.map((t, i) => {
+    const img = document.createElement('img');
+    img.src = 'assets/shots/' + t.file + '.webp';
+    img.alt = 'Meridian — ' + t.label;
+    img.loading = i === 0 ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    stage.appendChild(img);
+    return img;
+  });
+  const btns = TOUR.map((t, i) => {
+    const b = document.createElement('button');
+    b.innerHTML = '<i>' + pad(i) + '</i>' + t.label;
+    b.addEventListener('click', () => { goTo(i); restart(); });
+    tabsEl.appendChild(b);
+    return b;
+  });
+
+  let idx = -1, timer = null, inView = false, hovering = false;
+
+  function goTo(i) {
+    if (i === idx) return;
+    idx = i;
+    imgs.forEach((im, k) => im.classList.toggle('active', k === idx));
+    btns.forEach((b, k) => b.classList.toggle('active', k === idx));
+    if (countEl) countEl.textContent = pad(idx) + ' / ' + pad(TOUR.length - 1);
+    if (titleEl) titleEl.textContent = TOUR[idx].title;
+  }
+  function restart() {
+    clearInterval(timer);
+    timer = setInterval(() => { if (inView && !hovering) goTo((idx + 1) % TOUR.length); }, 5000);
+  }
+
+  goTo(0);
+  restart();
+  new IntersectionObserver(es => es.forEach(e => { inView = e.isIntersecting; }), { threshold: .2 }).observe(stage);
+  stage.addEventListener('pointerenter', () => { hovering = true; });
+  stage.addEventListener('pointerleave', () => { hovering = false; });
+})();
