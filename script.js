@@ -217,9 +217,7 @@ if (navToggle && mobileMenu) {
     { file: 'pos-arabic', label: 'POS Arabic', title: 'meridian / pos — arabic rtl' },
     { file: 'inventory',  label: 'Inventory',  title: 'meridian / inventory' },
     { file: 'analytics',  label: 'Analytics',  title: 'meridian / analytics' },
-    { file: 'reports',    label: 'Reports',    title: 'meridian / reports' },
-    { file: 'expiry',     label: 'Expiry',     title: 'meridian / expiry control' },
-    { file: 'dark-mode',  label: 'Dark mode',  title: 'meridian / dark mode' },
+    { file: 'reports',    label: 'Reports',    title: 'meridian / finance reports' },
   ];
   const countEl = document.getElementById('tourCount');
   const titleEl = document.getElementById('tourTitle');
@@ -227,7 +225,7 @@ if (navToggle && mobileMenu) {
 
   const imgs = TOUR.map((t, i) => {
     const img = document.createElement('img');
-    img.src = 'assets/shots/' + t.file + '.webp';
+    img.src = 'assets/shots/' + t.file + '.svg';
     img.alt = 'Meridian — ' + t.label;
     img.loading = i === 0 ? 'eager' : 'lazy';
     img.decoding = 'async';
