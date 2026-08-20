@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mohamed Elattar — software engineer portfolio." />
+  <title>Mohamed Elattar — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+</head>
+<body>
+  <div class="scroll-progress"></div>
+  <div class="noise"></div>
+  <div class="cursor-glow"></div>
+
+  <header class="nav">
+    <a class="brand" href="#top">Mohamed Elattar<span>.</span></a>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#stack">Stack</a>
+      <a href="cv.html">CV</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Let's talk <span>↗</span></a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#work"><span>01</span>Work</a>
+    <a href="#about"><span>02</span>About</a>
+    <a href="#stack"><span>03</span>Stack</a>
+    <a href="cv.html"><span>04</span>CV</a>
+    <a href="#contact"><span>05</span>Contact</a>
+    <a class="menu-cta" href="#contact">Let's talk <span>↗</span></a>
+  </div>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><i></i> AVAILABLE FOR SELECTED WORK</div>
+        <p class="hero-kicker"><b>MOHAMED ELATTAR</b> — SOFTWARE ENGINEER · FULL-STACK · AI / ML</p>
+        <h1>Building <em>systems</em><br>that feel simple.</h1>
+        <p class="hero-text">I design and build ambitious digital products — from multi-branch SaaS platforms to real-time IoT systems.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#work">Explore my work <span>↓</span></a>
+          <a class="button ghost" href="#contact">Get in touch <span>↗</span></a>
+        </div>
+      </div>
+      <div class="hero-visual reveal delay-2">
+        <div class="orbit orbit-a"></div>
+        <div class="orbit orbit-b"></div>
+        <div class="hero-card">
+          <div class="card-top"><span>LIVE SYSTEM</span><b>●</b></div>
+          <div class="terminal-line"><span>01</span> architecture</div>
+          <div class="terminal-line"><span>02</span> product</div>
+          <div class="terminal-line"><span>03</span> data</div>
+          <div class="terminal-line active"><span>04</span> experience</div>
+          <div class="mini-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="card-foot"><span>BUILD / SHIP / ITERATE</span><span>2026</span></div>
+        </div>
+        <div class="floating-tag tag-one">PRODUCT ENGINEERING</div>
+        <div class="floating-tag tag-two">01 / 03</div>
+      </div>
+      <div class="scroll-hint"><span>SCROLL</span><i></i></div>
+    </section>
+
+    <section class="marquee" aria-label="Technology keywords">
+      <div class="marquee-track">
+        <span>SOFTWARE</span><b>✦</b><span>SAAS</span><b>✦</b><span>AI / ML</span><b>✦</b><span>REAL-TIME</span><b>✦</b><span>IoT</span><b>✦</b><span>SOFTWARE</span><b>✦</b><span>SAAS</span><b>✦</b><span>AI / ML</span><b>✦</b><span>REAL-TIME</span><b>✦</b>
+      </div>
+    </section>
+
+    <section id="work" class="section work">
+      <div class="section-head reveal">
+        <div><span class="section-number">01</span><span class="section-label">SELECTED WORK</span></div>
+        <p>Products built around real operational problems — not demo screens.</p>
+      </div>
+
+      <article class="project project-main reveal">
+        <div class="project-info">
+          <div class="project-index">01 — FLAGSHIP PRODUCT</div>
+          <h2>Meridian<span>.</span></h2>
+          <p class="project-sub">Pharmacy operations, rebuilt as a modern multi-branch SaaS.</p>
+          <p class="project-desc">A production-oriented platform for inventory, POS, purchasing, customers, insurance, finance, analytics and branch operations. Designed around data integrity, multi-tenancy and high-volume workflows.</p>
+          <div class="chips"><span>Next.js</span><span>JavaScript</span><span>Supabase</span><span>PostgreSQL</span><span>RPC</span><span>Multi-tenant</span></div>
+          <a class="text-link" href="#contact">Discuss the product <span>↗</span></a>
+        </div>
+        <div class="product-window meridian-window">
+          <div class="window-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><small>meridian / dashboard</small></div>
+          <div class="dashboard">
+            <aside><strong>M</strong><div class="side-active">▦</div><div>▤</div><div>◫</div><div>◌</div><div>⚙</div></aside>
+            <div class="dash-body">
+              <div class="dash-title"><div><small>OVERVIEW</small><h3>Good morning</h3></div><div class="avatar">ME</div></div>
+              <div class="stats"><div><small>SALES TODAY</small><strong>EGP 184,920</strong><em>+12.8%</em></div><div><small>ORDERS</small><strong>1,284</strong><em>+8.2%</em></div><div><small>LOW STOCK</small><strong>47</strong><em class="warn">Needs action</em></div></div>
+              <div class="dash-grid"><div class="graph"><div class="graph-head"><b>Revenue</b><span>Last 7 days</span></div><div class="bars"><i style="height:42%"></i><i style="height:63%"></i><i style="height:52%"></i><i style="height:76%"></i><i style="height:68%"></i><i style="height:91%"></i><i style="height:82%"></i></div></div><div class="activity"><b>Recent activity</b><p><i></i> Invoice #10482 completed</p><p><i></i> Stocktake synced</p><p><i></i> New branch user added</p></div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="project project-secondary reveal">
+        <div class="iot-visual">
+          <div class="water-grid"></div><div class="sensor"><span></span><b>LEVEL</b><strong>HIGH</strong><small>NODE 04 · ONLINE</small></div><div class="wave"></div>
+          <div class="iot-label">DRAIN / REAL-TIME MONITORING</div>
+        </div>
+        <div class="project-info">
+          <div class="project-index">02 — IoT / REAL-TIME</div>
+          <h2>DrainGuard<span>.</span></h2>
+          <p class="project-sub">Real-time structural and water-level monitoring.</p>
+          <p class="project-desc">An IoT monitoring system connecting field sensors to a live cloud dashboard, with MQTT messaging and real-time state changes.</p>
+          <div class="chips"><span>ESP8266</span><span>Arduino</span><span>MQTT</span><span>Firebase</span><span>Realtime</span></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="about" class="section about">
+      <div class="section-head reveal"><div><span class="section-number">02</span><span class="section-label">ABOUT</span></div></div>
+      <div class="about-grid">
+        <h2 class="reveal">Engineer the<br><em>complex.</em> Simplify<br>the experience.</h2>
+        <div class="about-copy reveal delay-1"><p>I like the difficult part: understanding how a system actually behaves when real users, real data, concurrency, failures and edge cases enter the picture.</p><p>My work sits at the intersection of product engineering, data, automation and intelligent systems.</p><div class="facts"><div><strong>04+</strong><span>Years building</span></div><div><strong>∞</strong><span>Problems to solve</span></div><div><strong>01</strong><span>Mindset: ship</span></div></div></div>
+      </div>
+    </section>
+
+    <section id="stack" class="section stack">
+      <div class="section-head reveal"><div><span class="section-number">03</span><span class="section-label">TOOLBOX</span></div><p>Technologies are tools. Architecture and execution are the craft.</p></div>
+      <div class="stack-grid reveal">
+        <div class="stack-item"><small>01 / FRONTEND</small><h3>React<br>Next.js<br>JavaScript</h3></div>
+        <div class="stack-item"><small>02 / BACKEND</small><h3>Node.js<br>PostgreSQL<br>Supabase</h3></div>
+        <div class="stack-item"><small>03 / DATA & AI</small><h3>Python<br>Machine Learning<br>Automation</h3></div>
+        <div class="stack-item"><small>04 / SYSTEMS</small><h3>MQTT<br>IoT<br>Real-time</h3></div>
+      </div>
+    </section>
+
+    <section class="section philosophy">
+      <div class="quote reveal"><span>“</span><h2>Good software disappears.<br><em>Good engineering doesn't.</em></h2></div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="contact-inner reveal"><span class="section-label">04 / CONTACT</span><h2>Have a hard<br>problem?</h2><p>Let's turn it into something people can actually use.</p><a class="contact-email" href="mailto:mohedelattar25@gmail.com">mohedelattar25@gmail.com <span>↗</span></a><div class="socials"><a href="https://www.linkedin.com/in/mohamed-elattar-706893261/" target="_blank" rel="noopener">LinkedIn</a><a href="cv.html">CV</a></div></div>
+    </section>
+  </main>
+
+  <footer><span>© 2026 Mohamed Elattar</span><span>BUILT WITH INTENT</span></footer>
+  <script src="script.js"></script>
+</body>
+</html>
