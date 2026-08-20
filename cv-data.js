@@ -32,7 +32,6 @@ window.CV = {
         bullets: [
           "Architected and built a production-grade, multi-tenant SaaS platform for Egyptian multi-branch pharmacy chains, migrating the system from an initial Firebase/Firestore prototype to a relational Postgres/Supabase stack to support complex role-based access and reporting.",
           "Designed a seven-tier role hierarchy enforced end-to-end with Postgres Row-Level Security (RLS), covering branch-, chain-, and account-level data isolation.",
-          "Built a drug interaction checker (DDInter 2.0 + RxNorm) and a cross-sell/upsell engine on top of a 24,800+ product Egyptian drug database, plus GPS-based delivery tracking (OpenRouteService/Leaflet) and offline-resilient checkout.",
           "Ran a full security and performance audit (RLS gap analysis, unfiltered realtime subscriptions, cron/backup scheduling, capacity modeling) and produced a hardening roadmap raising the platform's readiness score from ~6/10 to a projected 8+/10.",
           "Developed the tiered pricing model and financial plan (per-branch pricing, break-even and margin analysis, VAT-threshold planning) and a competitive analysis against 7 Egyptian pharmacy-software incumbents to prepare the product for pilot sales."
         ]
@@ -44,24 +43,6 @@ window.CV = {
         bullets: [
           "Designed a multi-agent architecture with 11 specialist agents and hybrid (vector + keyword) search for an AI legal assistant targeting MENA, US, UK, and EU law firms.",
           "Produced a full build specification, design-principles document, and a UAE-market test pack; evaluated GLM-5.2 for generative agent tasks and selected an embedding strategy (BGE) and OCR approach for document-heavy workflows."
-        ]
-      },
-      {
-        name: "ATLAS",
-        sub: "Multi-Agent Autonomous AI System",
-        stack: ["MCP", "Tiered Memory", "DAG Orchestration"],
-        bullets: [
-          "Designed a multi-agent orchestration system using MCP tool protocols, DAG-based Plan-Execute-Replan workflows, and tiered memory (short/long-term) for autonomous task execution and PC control.",
-          "Built an interactive React dashboard prototype featuring a live memory map, a self-reorganizing task board, and a bilingual (Arabic/English) voice command console."
-        ]
-      },
-      {
-        name: "LifeOS",
-        sub: "AI Life-Coaching Platform",
-        stack: ["FastAPI", "Postgres + pgvector", "Celery", "Twilio", "Claude API"],
-        bullets: [
-          "Built a WhatsApp-native personal management system (tasks, journaling, fitness) backed by a vector-search memory store and an LLM-driven coaching layer.",
-          "Shipped Phase 0–2 production code: database schema, FastAPI backend with a Twilio webhook, and a Celery beat scheduler for proactive check-ins."
         ]
       },
       {
