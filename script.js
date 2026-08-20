@@ -86,7 +86,7 @@ const chartObserver = new IntersectionObserver(entries => entries.forEach(entry 
     chartObserver.unobserve(entry.target);
   }
 }), { threshold: .35 });
-document.querySelectorAll('.mini-chart, .graph .bars').forEach(chart => {
+document.querySelectorAll('.mini-chart').forEach(chart => {
   [...chart.children].forEach(bar => {
     const h = bar.getBoundingClientRect().height > 0
       ? getComputedStyle(bar).height
@@ -121,3 +121,84 @@ if (navToggle && mobileMenu) {
     if (e.key === 'Escape') closeMenu();
   });
 }
+
+/* ============================================================
+   SCROLL JOURNEY — scrub-driven scenes (hero boot, parallax,
+   dashboard assembly). Transform/opacity only. Skipped for
+   reduced-motion users and small screens.
+   ============================================================ */
+(() => {
+  const scrubOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    && window.innerWidth > 900;
+  if (!scrubOK) {
+    // graceful static fallback: 4th terminal line active, bars full height
+    document.querySelectorAll('.terminal-line')[3]?.classList.add('active');
+    document.querySelectorAll('.graph .bars i').forEach(b => b.style.height = b.style.height || '50%');
+    return;
+  }
+
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const hero = document.querySelector('.hero');
+  const card = document.querySelector('.hero-card');
+  const lines = [...document.querySelectorAll('.terminal-line')];
+  const orbitA = document.querySelector('.orbit-a');
+  const orbitB = document.querySelector('.orbit-b');
+  const grid = document.querySelector('.hero-grid');
+  const tagOne = document.querySelector('.tag-one');
+  const tagTwo = document.querySelector('.tag-two');
+  const dash = document.querySelector('.dashboard');
+  const bars = [...document.querySelectorAll('.graph .bars i')];
+  const sideItems = [...document.querySelectorAll('.dashboard aside > *')];
+  const statBlocks = [...document.querySelectorAll('.stats > div')];
+  const winBar = document.querySelector('.window-bar');
+
+  // remember bar target heights (inline %), start collapsed for the scrub
+  const barTargets = bars.map(b => parseFloat(b.style.height) || 50);
+  bars.forEach(b => b.style.height = '0%');
+  sideItems.forEach(el => el.style.opacity = '0');
+  statBlocks.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(14px)'; });
+  if (winBar) winBar.style.opacity = '0';
+  lines.forEach(l => l.classList.remove('active'));
+
+  let ticking = false;
+  const scrub = () => {
+    ticking = false;
+    const vh = window.innerHeight;
+
+    /* --- scene 1: hero boot sequence --- */
+    if (hero) {
+      const p = clamp(window.scrollY / (hero.offsetHeight * 0.85));
+      lines.forEach((l, i) => l.classList.toggle('active', p >= i * 0.22));
+      if (card) card.style.transform = `rotate(${(5 - 6.5 * p).toFixed(2)}deg)`;
+      if (orbitA) orbitA.style.transform = `rotate(${(35 + 22 * p).toFixed(1)}deg) scaleY(.4)`;
+      if (orbitB) orbitB.style.transform = `rotate(${(-35 - 16 * p).toFixed(1)}deg) scaleY(.4)`;
+      if (grid) grid.style.transform = `translateY(${(p * 46).toFixed(1)}px)`;
+      if (tagOne) tagOne.style.transform = `translateY(${(-p * 34).toFixed(1)}px)`;
+      if (tagTwo) tagTwo.style.transform = `translateY(${(p * 26).toFixed(1)}px)`;
+    }
+
+    /* --- scene 2: meridian dashboard assembly --- */
+    if (dash) {
+      const r = dash.getBoundingClientRect();
+      const q = clamp((vh * 0.88 - r.top) / (vh * 0.55));
+      if (winBar) winBar.style.opacity = String(clamp(q * 4));
+      sideItems.forEach((el, i) => {
+        el.style.opacity = String(clamp((q - 0.10 - i * 0.07) * 4));
+      });
+      statBlocks.forEach((el, i) => {
+        const s = clamp((q - 0.28 - i * 0.12) * 3.2);
+        el.style.opacity = String(s);
+        el.style.transform = `translateY(${(14 * (1 - s)).toFixed(1)}px)`;
+      });
+      bars.forEach((b, i) => {
+        const f = clamp((q - 0.35 - i * 0.055) * 2.6);
+        b.style.height = (barTargets[i] * f).toFixed(1) + '%';
+      });
+    }
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(scrub); }
+  }, { passive: true });
+  scrub();
+})();

@@ -38,6 +38,7 @@
 @media(max-width:900px){.cv-hero{padding:140px 6vw 60px}.cv-section{padding:70px 6vw}.cv-entry{grid-template-columns:1fr;gap:24px}.cv-ds-item{grid-template-columns:1fr;gap:6px}.cv-skills{grid-template-columns:1fr}.cv-langs{gap:40px}}
 
 /* ===================== INTERACTION ENHANCEMENTS ===================== */
+.terminal-line,.terminal-line span{transition:color .35s ease}
 .scroll-progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:40}
 nav a{position:relative}
 nav a.active{color:var(--text)}
