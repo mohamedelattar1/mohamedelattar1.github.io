@@ -14,7 +14,7 @@ window.CV = {
     phoneHref: "tel:+201126136967",
     email: "mohedelattar25@gmail.com",
     linkedin: "https://www.linkedin.com/in/mohamed-elattar-706893261/",
-    pdf: "assets/mohamed-elattar-cv.pdf"
+
   },
 
   profile: "Computer Science graduate and independent builder specializing in applied machine learning, agentic AI, and full-stack SaaS product development. Consistently the technical lead and sole architect on every project undertaken — from a production multi-tenant pharmacy SaaS platform to multi-agent AI systems, IoT platforms, and computer-vision models — with a track record of over 15 completed end-to-end builds. Strong foundation in Python, SQL, TensorFlow, LLM API integration, and cloud/IoT deployment, paired with a self-driven approach to shipping working products rather than isolated exercises.",
@@ -129,7 +129,7 @@ window.CV = {
     label: "LANGUAGES",
     items: [
       { name: "Arabic", level: "Native" },
-      { name: "English", level: "Intermediate" }
+      { name: "English", level: " Professional Working Proficienc " }
     ]
   }
 };
