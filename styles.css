@@ -147,3 +147,61 @@ nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-7px;heig
 .confetti{position:fixed;top:-14px;width:9px;height:14px;z-index:85;pointer-events:none;animation:confdrop 1.6s cubic-bezier(.3,.6,.6,1) forwards}
 @keyframes confdrop{to{transform:translateY(105vh) rotate(720deg);opacity:.2}}
 @media print{.avatar-widget,.fun-toast,.film-intro,.confetti{display:none!important}}
+
+/* ===================== 2026 REFRESH: aurora, glass, bento ===================== */
+.aurora{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;overflow:hidden;filter:blur(90px);opacity:.55}
+.aurora i{position:absolute;border-radius:50%;mix-blend-mode:screen}
+.aurora .a1{width:52vw;height:52vw;left:-12vw;top:-16vw;background:radial-gradient(circle,rgba(231,169,29,.32),transparent 65%);animation:aur1 26s ease-in-out infinite}
+.aurora .a2{width:44vw;height:44vw;right:-10vw;top:22vh;background:radial-gradient(circle,rgba(245,198,91,.16),transparent 60%);animation:aur2 31s ease-in-out infinite}
+.aurora .a3{width:46vw;height:46vw;left:22vw;bottom:-18vw;background:radial-gradient(circle,rgba(231,169,29,.13),transparent 62%);animation:aur3 36s ease-in-out infinite}
+@keyframes aur1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(9vw,7vh) scale(1.15)}}
+@keyframes aur2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-8vw,10vh) scale(.92)}}
+@keyframes aur3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6vw,-9vh) scale(1.1)}}
+@media(prefers-reduced-motion:reduce){.aurora i{animation:none}}
+/* glass panels */
+.hero-card,.tour-window,.mobile-menu{background:linear-gradient(145deg,rgba(30,32,40,.72),rgba(12,13,16,.66));-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px)}
+.hero-card{border:1px solid rgba(255,255,255,.16)}
+/* gradient headline word */
+.hero h1 em{background:linear-gradient(115deg,#e7a91d 20%,#f5c65b 45%,#fff2cf 55%,#e7a91d 80%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 7s linear infinite;font-family:inherit}
+@keyframes shimmer{to{background-position:220% 0}}
+/* bento stack */
+.stack-grid{grid-template-columns:repeat(6,1fr)}
+.stack-item{grid-column:span 2}
+.stack-item:nth-child(1){grid-column:span 3;min-height:320px}
+.stack-item:nth-child(2){grid-column:span 3;min-height:320px}
+.stack-item:nth-child(3){grid-column:span 2}
+.stack-item:nth-child(4){grid-column:span 4;min-height:220px}
+.stack-item{background:linear-gradient(160deg,rgba(255,255,255,.028),transparent 55%);border-radius:14px;margin:6px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .3s}
+.stack-item:hover{transform:translateY(-6px) scale(1.012);background:linear-gradient(160deg,rgba(231,169,29,.05),transparent 55%)}
+.stack-grid{border:none}
+@media(max-width:900px){.stack-item,.stack-item:nth-child(1),.stack-item:nth-child(2),.stack-item:nth-child(4){grid-column:span 3}.stack-item:nth-child(3){grid-column:span 3}}
+@media(max-width:560px){.stack-item,.stack-item:nth-child(n){grid-column:span 6}}
+
+/* ===================== AI ORB — tour guide ===================== */
+.ai-orb{position:fixed;top:0;left:0;width:86px;height:120px;z-index:62;cursor:pointer;will-change:transform;transform:translate(80vw,60vh)}
+.orb-svg{width:86px;height:100px;overflow:visible;filter:drop-shadow(0 8px 26px rgba(231,169,29,.35))}
+.orb-body{transform-origin:60px 58px}
+.ai-orb.float .orb-body{animation:orbFloat 3.2s ease-in-out infinite}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-7px) scale(.985,1.02)}}
+.ai-orb.squish .orb-body{animation:orbSquish 1s cubic-bezier(.34,1.4,.4,1)}
+@keyframes orbSquish{0%{transform:scale(1,1)}22%{transform:scale(1.28,.72)}55%{transform:scale(.9,1.12)}100%{transform:scale(1,1)}}
+.orb-ring{transform-origin:60px 60px;animation:orbSpin 9s linear infinite}
+@keyframes orbSpin{to{transform:rotate(360deg)}}
+.orb-core{animation:orbPulse 2.6s ease-in-out infinite}
+@keyframes orbPulse{0%,100%{opacity:.35}50%{opacity:.7}}
+.ai-orb:hover .orb-svg{filter:drop-shadow(0 10px 34px rgba(231,169,29,.6))}
+.orb-bubble{position:absolute;left:50%;bottom:112px;transform:translateX(-50%) scale(.94);width:250px;background:rgba(16,17,21,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid rgba(231,169,29,.4);border-radius:14px;padding:14px 30px 14px 14px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 20px 60px rgba(0,0,0,.55)}
+.orb-bubble[hidden]{display:block}
+.orb-bubble:not([hidden]){opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+.orb-bubble p{margin:0;font:12.5px/1.55 Manrope,sans-serif;color:#e9e6df}
+.orb-bubble.speaking{border-color:#f5c65b}
+.orb-bubble.speaking p{color:#fff2cf}
+.orb-bubble::after{content:"";position:absolute;left:50%;bottom:-7px;width:14px;height:14px;background:inherit;border-right:1px solid rgba(231,169,29,.4);border-bottom:1px solid rgba(231,169,29,.4);transform:translateX(-50%) rotate(45deg);background:rgba(16,17,21,.92)}
+.orb-x{position:absolute;top:6px;right:8px;background:none;border:none;color:#6e6a63;font-size:15px;cursor:pointer;line-height:1}
+.orb-x:hover{color:#f4f0e8}
+.orb-more{background:none;border:none;color:#e7a91d;font:9.5px "DM Mono",monospace;letter-spacing:.1em;cursor:pointer;padding:6px 0 0;display:block}
+@media(max-width:900px){.ai-orb{width:64px;height:86px}.orb-svg{width:64px;height:76px}.orb-bubble{width:210px;bottom:88px}}
+@media print{.ai-orb{display:none!important}}
+/* orb replaces the floating TALK button; its panel lives on */
+.avatar-fab{display:none!important}
+.avatar-widget{z-index:63}

@@ -355,3 +355,202 @@
     }
   }
 })();
+
+/* ============================================================
+   AI ORB — tour guide character. Travels between sections,
+   comments via speech bubbles, speaks on click. The gold dot
+   from the logo, alive.
+   ============================================================ */
+(() => {
+  const ORB_SVG = `
+  <svg viewBox="0 0 120 120" class="orb-svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="orbG" cx="38%" cy="32%">
+        <stop offset="0%" stop-color="#ffe9ad"/><stop offset="45%" stop-color="#f5c65b"/>
+        <stop offset="100%" stop-color="#c98f12"/>
+      </radialGradient>
+      <radialGradient id="orbCore" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="#fff7dd"/><stop offset="100%" stop-color="#f5c65b" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <ellipse cx="60" cy="108" rx="26" ry="6" fill="#000" opacity=".45" class="orb-shadow"/>
+    <g class="orb-body">
+      <circle cx="60" cy="58" r="34" fill="url(#orbG)"/>
+      <circle cx="60" cy="58" r="34" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1" opacity=".5"/>
+      <ellipse cx="47" cy="44" rx="12" ry="8" fill="#fff" opacity=".45"/>
+      <circle cx="60" cy="58" r="24" fill="url(#orbCore)" opacity=".5" class="orb-core"/>
+      <g class="orb-face">
+        <g class="orb-eyes">
+          <ellipse cx="49" cy="56" rx="6" ry="7.5" fill="#1c1503"/><circle cx="51" cy="53.5" r="2" fill="#fff"/>
+          <ellipse cx="71" cy="56" rx="6" ry="7.5" fill="#1c1503"/><circle cx="73" cy="53.5" r="2" fill="#fff"/>
+        </g>
+        <path class="orb-mouth" d="M52 70 Q60 76 68 70" fill="none" stroke="#1c1503" stroke-width="2.6" stroke-linecap="round"/>
+      </g>
+      <g class="orb-ring" opacity=".75">
+        <ellipse cx="60" cy="60" rx="46" ry="14" fill="none" stroke="#e7a91d" stroke-width="1.6" stroke-dasharray="5 7"/>
+      </g>
+    </g>
+  </svg>`;
+
+  const STOPS = [
+    { sel: '#top',        at: 'hero',    line: "Welcome to the lab. Scroll — I'll give you the tour." },
+    { sel: '#work',       at: 'work',    line: "Meridian — his flagship. Multi-tenant pharmacy SaaS. Real security, real margins." },
+    { sel: '#meridianTour', at: 'tour',  line: "Every pixel of this product, he designed. The demo data has better hair than most startups." },
+    { sel: '#about',      at: 'about',   line: "The human himself. He ships more before nine a.m. than most teams ship in a quarter." },
+    { sel: '#stack',      at: 'stack',   line: "Tools come and go. Architecture is forever. His line — I just say it cooler." },
+    { sel: '#contact',    at: 'contact', line: "And this… is where you click. Email him. He replies scary fast." }
+  ];
+
+  const orb = document.createElement('div');
+  orb.className = 'ai-orb';
+  orb.innerHTML = ORB_SVG + `
+    <div class="orb-bubble" hidden>
+      <p></p>
+      <button class="orb-more" hidden>voice panel →</button>
+      <button class="orb-x" aria-label="Dismiss">×</button>
+    </div>`;
+  document.body.appendChild(orb);
+
+  const body = orb.querySelector('.orb-body');
+  const bubble = orb.querySelector('.orb-bubble');
+  const bubbleP = orb.querySelector('.orb-bubble p');
+  const moreBtn = orb.querySelector('.orb-more');
+  const svg = orb.querySelector('.orb-svg');
+  const mouth = orb.querySelector('.orb-mouth');
+  const eyes = orb.querySelector('.orb-eyes');
+
+  /* --- voice (reuses the local audio system) --- */
+  let audioCtx = null, speaking = false, stopFlag = 0;
+  async function sayTour(idx) {
+    if (speaking) { stopFlag++; return; }
+    speaking = true;
+    const token = ++stopFlag;
+    try {
+      const buf = await (await fetch('assets/voice/daniel/tour-' + idx + '.m4a')).arrayBuffer();
+      if (token !== stopFlag) return;
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const audio = await audioCtx.decodeAudioData(buf);
+      const src = audioCtx.createBufferSource();
+      src.buffer = audio;
+      const an = audioCtx.createAnalyser();
+      an.fftSize = 256;
+      src.connect(an); an.connect(audioCtx.destination);
+      src.start();
+      bubble.classList.add('speaking');
+      const data = new Uint8Array(an.fftSize);
+      src.onended = () => { src._stopped = true; };
+      const deadline = Date.now() + audio.duration * 1000 + 500;
+      (function frame() {
+        if (token !== stopFlag || (src._stopped || Date.now() > deadline)) {
+          mouth.setAttribute('d', 'M52 70 Q60 76 68 70');
+          eyes.setAttribute('transform', '');
+          bubble.classList.remove('speaking');
+          speaking = false;
+          return;
+        }
+        an.getByteTimeDomainData(data);
+        let s = 0;
+        for (let i = 0; i < data.length; i++) { const v = (data[i] - 128) / 128; s += v * v; }
+        const rms = Math.sqrt(s / data.length);
+        const open = Math.min(9, rms * 55);
+        mouth.setAttribute('d', 'M52 ' + (68 + open / 2) + ' Q60 ' + (76 + open) + ' 68 ' + (68 + open / 2));
+        requestAnimationFrame(frame);
+      })();
+    } catch (e) { speaking = false; }
+  }
+
+  orb.addEventListener('click', () => {
+    orb.classList.remove('booted-welcome');
+    sayTour(currentStop);
+    bubble.hidden = false;
+  });
+  moreBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const fab = document.querySelector('.avatar-fab');
+    if (fab) fab.click();
+  });
+  orb.querySelector('.orb-x').addEventListener('click', (e) => {
+    e.stopPropagation();
+    bubble.hidden = true;
+  });
+
+  /* --- travel + tour stops --- */
+  let currentStop = -1;
+  const seen = new Set();
+  function place(x, y, animate) {
+    orb.style.transition = animate
+      ? 'transform 1.05s cubic-bezier(.34,1.25,.35,1)' : 'none';
+    orb.style.transform = `translate(${x}px, ${y}px)`;
+    if (animate) {
+      orb.classList.remove('squish');
+      void orb.offsetWidth;
+      orb.classList.add('squish');
+    }
+  }
+  function waypointFor(stop) {
+    const el = document.querySelector(stop.sel === '#top' ? '.hero' : stop.sel);
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    const y = Math.min(Math.max(r.top + window.scrollY + r.height * 0.25, 120),
+                       document.body.scrollHeight - 140);
+    const x = window.innerWidth - 130;
+    return { x, y };
+  }
+  let tick = false;
+  function onScroll() {
+    if (tick) return;
+    tick = true;
+    requestAnimationFrame(() => {
+      tick = false;
+      const probe = window.scrollY + window.innerHeight * 0.45;
+      let idx = 0;
+      STOPS.forEach((s, i) => {
+        const el = document.querySelector(s.sel === '#top' ? '.hero' : s.sel);
+        if (el && el.offsetTop <= probe) idx = i;
+      });
+      if (idx !== currentStop) {
+        currentStop = idx;
+        const st = STOPS[idx];
+        bubbleP.textContent = st.line;
+        bubble.hidden = false;
+        moreBtn.hidden = !document.querySelector('.avatar-fab');
+        clearTimeout(bubble._h);
+        bubble._h = setTimeout(() => { bubble.hidden = true; }, 7000);
+        if (window.innerWidth > 900) {
+          const wp = waypointFor(st);
+          if (wp) place(wp.x, wp.y, true);
+        }
+      }
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* mobile / small screens: docked corner with bounce per section */
+  function dockMobile() {
+    if (window.innerWidth <= 900) {
+      place(window.innerWidth - 96, window.innerHeight - 150, false);
+      orb.classList.remove('squish');
+      void orb.offsetWidth;
+      orb.classList.add('squish');
+    } else {
+      const wp = waypointFor(STOPS[Math.max(currentStop, 0)]);
+      if (wp) place(wp.x, wp.y, false);
+    }
+  }
+  window.addEventListener('resize', dockMobile);
+
+  /* --- idle float + blink --- */
+  orb.classList.add('float');
+  (function orbBlink() {
+    setTimeout(() => {
+      eyes.setAttribute('transform', 'scale(1 0.08)');
+      setTimeout(() => eyes.setAttribute('transform', ''), 140);
+      orbBlink();
+    }, 2600 + Math.random() * 3000);
+  })();
+
+  /* initial position */
+  dockMobile();
+  onScroll();
+})();
