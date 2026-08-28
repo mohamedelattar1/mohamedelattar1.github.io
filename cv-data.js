@@ -14,10 +14,10 @@ window.CV = {
     phoneHref: "tel:+201126136967",
     email: "mohedelattar25@gmail.com",
     linkedin: "https://www.linkedin.com/in/mohamed-elattar-706893261/",
-
+    pdf: "assets/mohamed-elattar-cv.pdf"
   },
 
-  profile: "Computer Science graduate and independent builder specializing in applied machine learning, agentic AI, and full-stack SaaS product development. Consistently the technical lead and sole architect on every project undertaken — from a production multi-tenant pharmacy SaaS platform to multi-agent AI systems, IoT platforms, and computer-vision models — with a track record of over 15 completed end-to-end builds. Strong foundation in Python, SQL, TensorFlow, LLM API integration, and cloud/IoT deployment, paired with a self-driven approach to shipping working products rather than isolated exercises.",
+  profile: "Computer Science graduate and independent builder specializing in applied machine learning, agentic AI, and full-stack SaaS product development. Sole technical lead and architect across a broad portfolio spanning a multi-tenant pharmacy SaaS platform, multi-agent AI systems, IoT platforms, and computer-vision models. Strong foundation in Python, SQL, TensorFlow, LLM API integration, and cloud/IoT deployment, with a self-driven approach to designing, architecting, and building working products end to end.",
 
   projects: {
     number: "02",
@@ -30,7 +30,7 @@ window.CV = {
         sub: "Multi-Branch Pharmacy SaaS Platform",
         stack: ["React", "Supabase (Postgres)", "Vercel", "Row-Level Security"],
         bullets: [
-          "Architected and built a production-grade, multi-tenant SaaS platform for Egyptian multi-branch pharmacy chains, migrating the system from an initial Firebase/Firestore prototype to a relational Postgres/Supabase stack to support complex role-based access and reporting.",
+          "Architected and built a multi-tenant SaaS platform for Egyptian multi-branch pharmacy chains, migrating the system from an initial Firebase/Firestore prototype to a relational Postgres/Supabase stack to support complex role-based access and reporting.",
           "Designed a seven-tier role hierarchy enforced end-to-end with Postgres Row-Level Security (RLS), covering branch-, chain-, and account-level data isolation.",
           "Ran a full security and performance audit (RLS gap analysis, unfiltered realtime subscriptions, cron/backup scheduling, capacity modeling) and produced a hardening roadmap raising the platform's readiness score from ~6/10 to a projected 8+/10.",
           "Developed the tiered pricing model and financial plan (per-branch pricing, break-even and margin analysis, VAT-threshold planning) and a competitive analysis against 7 Egyptian pharmacy-software incumbents to prepare the product for pilot sales."
@@ -51,7 +51,7 @@ window.CV = {
         stack: ["React", "TypeScript", "Node/Express", "Firebase"],
         bullets: [
           "Built a mobile-first web app that generates personalized workout and meal plans using an LLM, combining survey data, uploaded body-composition PDFs, and live weather data.",
-          "Shipped a v2 adaptive quarterly planning system with calendar-based tracking, monthly AI-driven plan adjustments, and a safety interrupt for injuries or goal changes."
+          "Designed a v2 adaptive quarterly planning system with calendar-based tracking, monthly AI-driven plan adjustments, and a safety interrupt for injuries or goal changes."
         ]
       },
       {
@@ -114,13 +114,8 @@ window.CV = {
     number: "06",
     label: "TECHNICAL SKILLS",
     groups: [
-      { category: "Languages", items: ["Python", "Java", "SQL", "TypeScript/JavaScript"] },
-      { category: "AI / LLM Engineering", items: ["LLM API integration (Claude, GLM)", "Multi-agent orchestration", "Prompt engineering", "MCP tool protocols", "Vector search (pgvector)", "RAG"] },
-      { category: "ML / DL", items: ["TensorFlow", "PyTorch", "scikit-learn", "CNNs", "Time-series (ARMA/GARCH)", "Classical ML (regression, trees, ensembles, clustering)"] },
-      { category: "Backend / Data", items: ["FastAPI", "Node/Express", "PostgreSQL (Supabase, RLS)", "Firebase/Firestore", "MongoDB", "SQLite", "Celery", "pandas", "ETL pipelines"] },
-      { category: "Frontend", items: ["React", "Vite", "JavaFX", "Streamlit", "Plotly Dash"] },
-      { category: "Systems / Deployment", items: ["Vercel", "Render", "MQTT/IoT", "REST APIs", "Twilio"] },
-      { category: "Automation", items: ["n8n workflow automation", "Google Workspace API (Gmail, Forms)"] }
+      { category: "Core", items: ["Python", "SQL", "TypeScript/JavaScript", "LLM API Integration (Claude, GLM)", "Multi-Agent Orchestration", "PostgreSQL (Supabase, Row-Level Security)", "React", "FastAPI"] },
+      { category: "Familiar with", items: ["Java", "PyTorch", "TensorFlow", "scikit-learn", "MCP Tool Protocols", "Vector Search (pgvector)", "RAG", "Firebase/Firestore", "MongoDB", "SQLite", "Celery", "pandas", "ETL Pipelines", "Vite", "JavaFX", "Streamlit", "Plotly Dash", "Vercel", "Render", "MQTT/IoT", "Twilio", "n8n", "Google Workspace API"] }
     ]
   },
 
@@ -129,7 +124,7 @@ window.CV = {
     label: "LANGUAGES",
     items: [
       { name: "Arabic", level: "Native" },
-      { name: "English", level: " Professional Working Proficienc " }
+      { name: "English", level: "Professional Working Proficiency" }
     ]
   }
 };
