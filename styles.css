@@ -99,3 +99,46 @@ nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-7px;heig
   .reveal{opacity:1!important;transform:none!important}
   .contact{display:none}
 }
+
+/* ===================== FUN LAYER: film intro, avatar, easter egg ===================== */
+.film-intro{position:fixed;top:0;left:0;right:0;bottom:0;background:#070707;z-index:90;display:grid;place-items:center;transition:clip-path .7s cubic-bezier(.4,0,.2,1);clip-path:circle(150% at 50% 50%)}
+.film-intro.iris{clip-path:circle(0% at 50% 50%)}
+.film-leader{position:relative;width:280px;height:280px}
+.film-dial{position:absolute;top:0;left:0;width:100%;height:100%}
+.film-sweep{transform-origin:60px 60px;animation:sweep .65s linear infinite}
+@keyframes sweep{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.film-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);font:120px Manrope,sans-serif;font-weight:800;color:#f4f0e8;letter-spacing:-.06em}
+.film-cross-h,.film-cross-v{position:absolute;background:#2a2a2a}
+.film-cross-h{top:50%;left:-40px;right:-40px;height:1px}
+.film-cross-v{left:50%;top:-40px;bottom:-40px;width:1px}
+.film-title{position:absolute;text-align:center;opacity:0;transform:scale(.96);transition:opacity .45s ease,transform .45s cubic-bezier(0,0,.2,1)}
+.film-intro.title .film-title{opacity:1;transform:scale(1)}
+.film-title span{display:block;font:800 clamp(28px,5vw,54px) Manrope,sans-serif;letter-spacing:-.05em;color:var(--text)}
+.film-title em{display:block;margin-top:14px;font:11px "DM Mono",monospace;letter-spacing:.35em;color:var(--accent);font-style:normal}
+.avatar-widget{position:fixed;right:22px;bottom:22px;z-index:60;font-family:Manrope,sans-serif}
+.avatar-fab{position:relative;width:74px;height:74px;border-radius:50%;border:1px solid var(--line);background:#101115;cursor:pointer;padding:5px;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.avatar-fab:hover{transform:scale(1.08) rotate(-3deg);box-shadow:0 0 34px rgba(231,169,29,.25)}
+.avatar-fab .avatar-svg{width:100%;height:100%;display:block}
+.avatar-fab-label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font:8px "DM Mono",monospace;letter-spacing:.2em;color:var(--accent)}
+.avatar-fab .av-dot{animation:avpulse 2s infinite}
+@keyframes avpulse{0%,100%{opacity:1}50%{opacity:.25}}
+.avatar-panel{position:absolute;right:0;bottom:104px;width:320px;background:#0d0e12;border:1px solid #262a33;border-radius:14px;padding:16px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.avatar-media{width:150px;height:150px;margin:0 auto 12px;border-radius:12px;overflow:hidden;background:#101115;border:1px solid #262a33}
+.avatar-media .avatar-svg{width:100%;height:100%}
+.avatar-media .av-mouth{transition:height .08s linear,y .08s linear}
+.avatar-caption{min-height:38px;font-size:12px;line-height:1.5;color:#a7a39b;text-align:center;margin-bottom:12px}
+.avatar-caption b{color:var(--text)}
+.avatar-lines{display:grid;gap:6px}
+.avatar-line{background:none;border:1px solid var(--line);border-radius:8px;color:#8b8f98;font:10.5px "DM Mono",monospace;text-align:left;padding:9px 10px;cursor:pointer;transition:color .2s,border-color .2s}
+.avatar-line:hover{color:var(--text)}
+.avatar-line.active{color:var(--text);border-color:var(--accent)}
+.avatar-controls{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.avatar-stop{background:none;border:1px solid var(--line);border-radius:6px;color:#8b8f98;font:10px "DM Mono",monospace;padding:6px 10px;cursor:pointer}
+.avatar-stop:hover{color:#d96c4f;border-color:#d96c4f}
+.avatar-hint{font:8px "DM Mono",monospace;color:#4f4c47;letter-spacing:.05em}
+@media(max-width:560px){.avatar-fab{width:60px;height:60px}.avatar-panel{width:min(320px,calc(100vw - 44px))}}
+.fun-toast{position:fixed;left:50%;bottom:110px;transform:translate(-50%,20px);background:#101115;border:1px solid var(--accent);color:var(--text);font:11px "DM Mono",monospace;letter-spacing:.08em;padding:12px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:80}
+.fun-toast.show{opacity:1;transform:translate(-50%,0)}
+.confetti{position:fixed;top:-14px;width:9px;height:14px;z-index:85;pointer-events:none;animation:confdrop 1.6s cubic-bezier(.3,.6,.6,1) forwards}
+@keyframes confdrop{to{transform:translateY(105vh) rotate(720deg);opacity:.2}}
+@media print{.avatar-widget,.fun-toast,.film-intro,.confetti{display:none!important}}
