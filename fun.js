@@ -90,7 +90,7 @@
       <div class="avatar-lines"></div>
       <div class="avatar-controls">
         <button class="avatar-stop">■ Stop</button>
-        <span class="avatar-hint">Free browser TTS — no cloud, no keys.</span>
+        <span class="avatar-hint">Natural voices · live lip-sync · zero keys</span>
       </div>
     </div>`;
   document.body.appendChild(widget);
@@ -109,7 +109,7 @@
     b.className = 'avatar-line';
     b.textContent = (i === LINES.length - 1 ? '🇪🇬 ' : '0' + (i + 1) + '. ') + text.slice(0, 46) + '…';
     b.dataset.full = text;
-    b.addEventListener('click', () => speak(text, b));
+    b.addEventListener('click', () => speakLine(i, b));
     linesEl.appendChild(b);
   });
 
@@ -118,68 +118,155 @@
     fab.classList.toggle('open', !panel.hidden);
   });
 
-  /* -- speech + mouth sync -- */
-  let talking = false, visTimer = null, vis = 0;
-  const MOUTH_SHAPES = [
-    { h: 6, y: 126 },   // rest
-    { h: 12, y: 122 },  // mid
-    { h: 20, y: 116 },  // wide
-    { h: 9, y: 124 }    // "oo"
+  /* -- speech engine: natural Polly voices via StreamElements (free, no key),
+        real lip-sync from live audio analysis. Browser TTS = fallback. -- */
+  let talking = false, speakToken = 0;
+  const VOICES = [
+    { id: 'daniel', label: 'Daniel · UK' },
+    { id: 'samantha', label: 'Samantha · US' }
   ];
+  let chosenVoice = 'daniel';
+  const PHRASE_TEXT = {
+    daniel:   [["Hey!","Mohamed here — AI engineer, and the voice inside this portfolio."],["I build agents, RAG systems, and multi-tenant SaaS platforms that actually ship."],["The beard is real.","The avatar?","Not so much.","Scroll down and judge the work."]],
+    samantha: [["Hey!","Mohamed here — AI engineer, and the voice inside this portfolio."],["I build agents, RAG systems, and multi-tenant SaaS platforms that actually ship."],["The beard is real.","The avatar?","Not so much.","Scroll down and judge the work."]],
+    majed:    [["أهلاً بكم — والآن، لنصنع شيئاً رائعاً."]]
+  };
+  const PHRASE_FILES = {
+    daniel:   [[0,1],[0],[0,1,2,3]],
+    samantha: [[0,1],[0],[0,1,2,3]],
+    majed:    [[0]]
+  };
 
-  function setMouth(shape) {
-    mouth.setAttribute('height', shape.h);
-    mouth.setAttribute('y', shape.y);
+  const mouthEl = () => bigSvg.querySelector('.av-mouth');
+  function setMouth(h) {
+    const m = mouthEl();
+    m.setAttribute('height', h.toFixed(1));
+    m.setAttribute('y', (126 - (h - 6) / 2).toFixed(1));
   }
 
-  function startVisemes() {
-    stopVisemes();
-    visTimer = setInterval(() => {
-      vis = (vis + 1 + Math.floor(Math.random() * 2)) % MOUTH_SHAPES.length;
-      setMouth(MOUTH_SHAPES[vis]);
-    }, 95);
+  let audioCtx = null;
+  const getCtx = () => (audioCtx ||= new (window.AudioContext || window.webkitAudioContext)());
+
+  /* mouth follows the actual audio amplitude */
+  function lipSync(source, analyser, done, maxMs) {
+    const data = new Uint8Array(analyser.fftSize);
+    const browsL = bigSvg.querySelector('.av-brow-l');
+    const browsR = bigSvg.querySelector('.av-brow-r');
+    const head = bigSvg;
+    source.onended = () => { source._stopped = true; };
+    const killAt = Date.now() + (maxMs || 15000);
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      setMouth(6);
+      head.style.transform = '';
+      browsL.style.transform = '';
+      browsR.style.transform = '';
+      done();
+    };
+    setTimeout(finish, maxMs || 15000);            // hard safety net
+    (function frame() {
+      if (source._stopped || Date.now() > killAt) return finish();
+      analyser.getByteTimeDomainData(data);
+      let sum = 0;
+      for (let i = 0; i < data.length; i++) { const v = (data[i] - 128) / 128; sum += v * v; }
+      const rms = Math.sqrt(sum / data.length);            // 0..~0.5
+      const open = Math.min(22, 4 + rms * 90);             // amplitude -> mouth
+      setMouth(open);
+      const lift = Math.min(3, rms * 18);                  // brows react
+      browsL.style.transform = `translateY(${(-lift).toFixed(1)}px)`;
+      browsR.style.transform = `translateY(${(-lift).toFixed(1)}px)`;
+      head.style.transform = `translateY(${(Math.sin(Date.now() / 130) * rms * 5).toFixed(1)}px)`; // head bob
+      if (!finished) requestAnimationFrame(frame);
+    })();
   }
-  function stopVisemes() {
-    clearInterval(visTimer);
-    visTimer = null;
-    setMouth(MOUTH_SHAPES[0]);
+
+  function playPhrase(url, text) {
+    return new Promise((resolve) => {
+      fetch(url)
+        .then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); })
+        .then(buf => getCtx().decodeAudioData(buf))
+        .then(audio => {
+          const ctx = getCtx();
+          if (ctx.state === 'suspended') ctx.resume();
+          const src = ctx.createBufferSource();
+          src.buffer = audio;
+          const an = ctx.createAnalyser();
+          an.fftSize = 512;
+          src.connect(an);
+          an.connect(ctx.destination);
+          src.start();
+          caption.innerHTML = esc(text);
+          lipSync(src, an, resolve, Math.ceil(audio.duration * 1000) + 400);
+        })
+        .catch(() => { fallbackTTS(text).then(resolve); });
+    });
   }
+
+  function fallbackTTS(text) {
+    return new Promise((resolve) => {
+      if (!supported) { typeCaption(text); return setTimeout(resolve, text.length * 45); }
+      const ar = /[\u0600-\u06FF]/.test(text);
+      const u = new SpeechSynthesisUtterance(text);
+      const v = pickVoice(ar);
+      if (v) u.voice = v;
+      u.rate = 1.0;
+      u.onend = u.onerror = () => resolve();
+      u.onboundary = () => setMouth(8 + Math.random() * 12);
+      caption.textContent = text;
+      synth.speak(u);
+    });
+  }
+
+  async function speakLine(li, btn) {
+    [...linesEl.children].forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    const token = ++speakToken;
+    talking = true;
+    const ar = li === LINES.length - 1;
+    const folder = ar ? 'majed' : chosenVoice;
+    const count = PHRASE_FILES[folder][ar ? 0 : li].length;
+    for (let pi = 0; pi < count; pi++) {
+      if (token !== speakToken) return;
+      const phraseText = PHRASE_TEXT[folder][ar ? 0 : li][pi];
+      await playPhrase(`assets/voice/${folder}/${li}-${pi}.m4a`, phraseText);
+      if (token !== speakToken) return;
+      await new Promise(r => setTimeout(r, 190));
+    }
+    talking = false;
+    caption.textContent = '—';
+    if (btn) btn.classList.remove('active');
+  }
+
+  function stopSpeaking() {
+    speakToken++;
+    talking = false;
+    if (supported) synth.cancel();
+    setMouth(6);
+    bigSvg.style.transform = '';
+    caption.textContent = 'Stopped. Click a line — I insist.';
+  }
+  widget.querySelector('.avatar-stop').addEventListener('click', stopSpeaking);
+
+  /* voice picker */
+  const picker = document.createElement('div');
+  picker.className = 'avatar-voices';
+  picker.innerHTML = VOICES.map(v =>
+    `<button data-v="${v.id}" class="${v.id === chosenVoice ? 'active' : ''}">${v.label}</button>`).join('');
+  picker.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    chosenVoice = b.dataset.v;
+    [...picker.children].forEach(x => x.classList.toggle('active', x === b));
+  });
+  widget.querySelector('.avatar-controls').prepend(picker);
 
   function pickVoice(ar) {
     const vs = synth.getVoices();
-    return vs.find(v => (ar ? v.lang.startsWith('ar') : v.lang.startsWith('en') && /google|natural|samantha|daniel/i.test(v.name)))
+    return vs.find(v => (ar ? v.lang.startsWith('ar') : v.lang.startsWith('en') && /google|natural|premium/i.test(v.name)))
         || vs.find(v => ar ? v.lang.startsWith('ar') : v.lang.startsWith('en'))
         || null;
-  }
-
-  function speak(text, btn) {
-    [...linesEl.children].forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-    if (!supported) { typeCaption(text); return; }
-    synth.cancel();
-    const ar = /[\u0600-\u06FF]/.test(text);
-    const u = new SpeechSynthesisUtterance(text);
-    const v = pickVoice(ar);
-    if (v) u.voice = v;
-    u.rate = ar ? 0.95 : 1.02;
-    u.pitch = 1.0;
-    u.onstart = () => { talking = true; startVisemes(); brows.forEach(b => b.style.transform = 'translateY(2px)'); };
-    u.onend = u.onerror = () => {
-      talking = false; stopVisemes();
-      brows.forEach(b => b.style.transform = '');
-      caption.textContent = '—';
-    };
-    u.onboundary = (e) => {
-      if (e.name === 'word' || e.charIndex != null) {
-        setMouth(MOUTH_SHAPES[2]);
-        const upto = text.slice(0, e.charIndex);
-        const rest = text.slice(e.charIndex);
-        const wordEnd = rest.indexOf(' ');
-        caption.innerHTML = esc(upto) + '<b>' + esc(wordEnd === -1 ? rest : rest.slice(0, wordEnd)) + '</b>' + esc(wordEnd === -1 ? '' : rest.slice(wordEnd));
-      }
-    };
-    caption.textContent = text;
-    synth.speak(u);
   }
 
   function typeCaption(text) {

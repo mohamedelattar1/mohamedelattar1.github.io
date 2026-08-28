@@ -1,0 +1,58 @@
+{
+ "daniel": [
+  {
+   "line": 0,
+   "phrases": [
+    "Hey!",
+    "Mohamed here — AI engineer, and the voice inside this portfolio."
+   ]
+  },
+  {
+   "line": 1,
+   "phrases": [
+    "I build agents, RAG systems, and multi-tenant SaaS platforms that actually ship."
+   ]
+  },
+  {
+   "line": 2,
+   "phrases": [
+    "The beard is real.",
+    "The avatar?",
+    "Not so much.",
+    "Scroll down and judge the work."
+   ]
+  }
+ ],
+ "samantha": [
+  {
+   "line": 0,
+   "phrases": [
+    "Hey!",
+    "Mohamed here — AI engineer, and the voice inside this portfolio."
+   ]
+  },
+  {
+   "line": 1,
+   "phrases": [
+    "I build agents, RAG systems, and multi-tenant SaaS platforms that actually ship."
+   ]
+  },
+  {
+   "line": 2,
+   "phrases": [
+    "The beard is real.",
+    "The avatar?",
+    "Not so much.",
+    "Scroll down and judge the work."
+   ]
+  }
+ ],
+ "majed": [
+  {
+   "line": 3,
+   "phrases": [
+    "أهلاً بكم — والآن، لنصنع شيئاً رائعاً."
+   ]
+  }
+ ]
+}
