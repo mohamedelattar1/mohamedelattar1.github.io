@@ -1,12 +1,13 @@
-# Mohamed Elattar — Portfolio
+# Mohamed Elattar - Portfolio
 
-A cinematic, responsive developer portfolio built with plain HTML, CSS and JavaScript.
+A responsive AI engineering portfolio built with plain HTML, CSS, and JavaScript.
 
 ## Pages
-- `index.html` — portfolio (hero, work, about, stack, contact)
-- `cv.html` — full CV rendered as website content (data-driven)
-- `cv-data.js` — **all CV content lives here**; edit this file to update the CV page, no HTML needed
-- `assets/mohamed-elattar-cv.pdf` — the downloadable CV (Download PDF button)
+- `index.html` - interactive portfolio with project field notes
+- `cv.html` - full CV rendered as website content
+- `cv-data.js` - CV page content
+- `assets/mohamed-elattar-cv.pdf` - downloadable two-page recruiter CV
+- `scripts/generate_cv_pdf.py` - reproducible PDF generator
 
 ## Run
 Open `index.html` directly, or serve the folder with any static server:
@@ -17,10 +18,15 @@ python3 -m http.server 8000
 
 ## Notes
 - LinkedIn: https://www.linkedin.com/in/mohamed-elattar-706893261/
-- To update the CV: edit `cv-data.js` (page) and/or replace `assets/mohamed-elattar-cv.pdf` (download).
-- Ctrl/Cmd+P on `cv.html` prints a clean white-paper version.
-- Interactions (in `script.js`): scroll progress bar, scrollspy nav highlighting,
-  count-up dashboard stats, growing charts, mobile hamburger menu (≤900px).
+- To update the web CV, edit `cv-data.js`.
+- To regenerate the downloadable PDF, run the bundled Python environment or any Python installation with ReportLab:
+
+```bash
+python3 scripts/generate_cv_pdf.py
+```
+
+- The PDF contains clickable links to the live portfolio, LinkedIn, email, and phone.
+- Interactions include scroll progress, project viewers, mobile navigation, reveal motion, and a responsive field-notes avatar.
 
 ## Deploy
-This is static and can be deployed to Vercel, Netlify, GitHub Pages, or any static host.
+The production site is published from this repository at https://mohamedelattar1.github.io/.

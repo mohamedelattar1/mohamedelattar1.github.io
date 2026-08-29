@@ -1,153 +1,144 @@
-/* ============================================================
-   CV RENDERER — builds the CV page from cv-data.js
-   ============================================================ */
-
-(function () {
+(() => {
   const cv = window.CV;
   if (!cv) return;
 
-  const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-  const sectionHead = (number, label, note) => `
-    <div class="section-head reveal">
-      <div><span class="section-number">${esc(number)}</span><span class="section-label">${esc(label)}</span></div>
-      ${note ? `<p>${esc(note)}</p>` : ""}
-    </div>`;
-
-  const chips = arr => `<div class="chips">${arr.map(c => `<span>${esc(c)}</span>`).join("")}</div>`;
-
-  /* ---- Hero ---- */
+  const esc = value => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
   const b = cv.basics;
+  const chips = items => `<div class="cv-chips">${items.map(item => `<span>${esc(item)}</span>`).join('')}</div>`;
+  const sectionHead = (number, label, note = '') => `
+    <header class="cv-section-head reveal">
+      <span>${esc(number)}</span>
+      <h2>${esc(label)}</h2>
+      ${note ? `<p>${esc(note)}</p>` : ''}
+    </header>`;
+
   const hero = `
-    <section class="cv-hero">
-      <div class="eyebrow reveal"><i></i> CURRICULUM VITAE — 2026</div>
-      <h1 class="reveal">${esc(b.name)}<span>.</span></h1>
-      <p class="cv-role reveal delay-1"><em>${esc(b.title)}</em></p>
-      <div class="cv-meta reveal delay-2">
-        <span class="cv-meta-item">${esc(b.location)}</span>
-        <a href="${esc(b.phoneHref)}">${esc(b.phone)}</a>
+    <section class="cv-cover" aria-labelledby="cvName">
+      <div class="cv-cover-grid" aria-hidden="true"></div>
+      <div class="cv-cover-copy">
+        <div class="availability"><span></span> OPEN TO JUNIOR AI ROLES</div>
+        <p class="cv-kicker">CURRICULUM VITAE / 2026</p>
+        <h1 id="cvName">Mohamed<br>Elattar<span>.</span></h1>
+        <p class="cv-title">${esc(b.title)}</p>
+        <div class="cv-cover-actions">
+          <a class="button button-primary" href="${esc(b.pdf)}" download="Mohamed-Elattar-CV.pdf"><i data-lucide="download"></i> Download PDF</a>
+          <a class="button button-quiet" href="${esc(b.portfolio)}"><i data-lucide="layout-grid"></i> Portfolio</a>
+        </div>
+      </div>
+      <div class="cv-cover-photo"><img src="assets/portrait-color.png" alt="Mohamed Elattar"></div>
+      <div class="cv-contact-rail">
+        <span>${esc(b.location)}</span>
         <a href="mailto:${esc(b.email)}">${esc(b.email)}</a>
-        <a href="${esc(b.linkedin)}" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a class="button primary" href="${esc(b.pdf)}" download="Mohamed Elattar CV.pdf">Download PDF <span>↓</span></a>
+        <a href="${esc(b.phoneHref)}">${esc(b.phone)}</a>
+        <a href="${esc(b.portfolio)}">Portfolio <i data-lucide="arrow-up-right"></i></a>
+        <a href="${esc(b.linkedin)}" target="_blank" rel="noopener">LinkedIn <i data-lucide="arrow-up-right"></i></a>
       </div>
     </section>`;
 
-  /* ---- Profile ---- */
-  const profile = `
-    <section class="cv-section">
-      ${sectionHead("01", "PROFILE")}
-      <p class="cv-profile reveal">${esc(cv.profile)}</p>
+  const intro = `
+    <section class="cv-intro cv-shell">
+      <div class="cv-intro-label reveal"><span>01</span> PROFILE</div>
+      <p class="cv-profile-text reveal">${esc(cv.profile)}</p>
+      <div class="cv-proof reveal">
+        <div><strong>2024</strong><span>Computer Science graduate</span></div>
+        <div><strong>10+</strong><span>AI, ML and data projects</span></div>
+        <div><strong>EN / AR</strong><span>Professional English, native Arabic</span></div>
+      </div>
     </section>`;
 
-  /* ---- Projects ---- */
   const p = cv.projects;
   const projects = `
-    <section class="cv-section">
-      ${sectionHead(p.number, p.label, p.role + " · " + p.period)}
-      ${p.items.map(item => `
-        <article class="cv-entry reveal">
-          <div class="cv-entry-head">
-            <h3>${esc(item.name)}<span>.</span></h3>
-            <p>${esc(item.sub)}</p>
-            ${chips(item.stack)}
-          </div>
-          <div class="cv-entry-body">
-            <ul>${item.bullets.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
-          </div>
-        </article>`).join("")}
-    </section>`;
-
-  /* ---- Data science ---- */
-  const d = cv.dataScience;
-  const ds = `
-    <section class="cv-section">
-      ${sectionHead(d.number, d.label)}
-      <div class="cv-ds-list reveal">
-        ${d.items.map(i => `
-          <div class="cv-ds-item">
-            <strong>${esc(i.name)}</strong>
-            <p>${esc(i.desc)}</p>
-          </div>`).join("")}
+    <section class="cv-block cv-shell">
+      ${sectionHead(p.number, p.label, `${p.role} / ${p.period}`)}
+      <div class="cv-project-list">
+        ${p.items.map((item, index) => `
+          <article class="cv-project reveal">
+            <div class="cv-project-index">${String(index + 1).padStart(2, '0')}</div>
+            <div class="cv-project-title">
+              <h3>${esc(item.name)}<span>.</span></h3>
+              <p>${esc(item.sub)}</p>
+              ${chips(item.stack)}
+            </div>
+            <ul>${item.bullets.map(bullet => `<li>${esc(bullet)}</li>`).join('')}</ul>
+          </article>`).join('')}
       </div>
     </section>`;
 
-  /* ---- Graduation project ---- */
+  const d = cv.dataScience;
+  const dataScience = `
+    <section class="cv-block cv-shell cv-tint">
+      ${sectionHead(d.number, d.label)}
+      <div class="cv-ml-grid">
+        ${d.items.map(item => `
+          <article class="cv-ml-item reveal">
+            <i data-lucide="scan-search"></i>
+            <h3>${esc(item.name)}</h3>
+            <p>${esc(item.desc)}</p>
+          </article>`).join('')}
+      </div>
+    </section>`;
+
   const g = cv.graduation;
-  const grad = `
-    <section class="cv-section">
-      ${sectionHead(g.number, g.label)}
-      <article class="cv-entry reveal">
-        <div class="cv-entry-head">
-          <h3>${esc(g.name.split(" — ")[0])}<span>.</span></h3>
-          <p>${esc(g.name.split(" — ")[1] || "")}</p>
-          ${chips([g.period])}
-        </div>
-        <div class="cv-entry-body">
-          <ul>${g.bullets.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
-        </div>
+  const graduation = `
+    <section class="cv-block cv-shell">
+      ${sectionHead(g.number, g.label, g.period)}
+      <article class="cv-focus reveal">
+        <div><small>CAPSTONE / IOT</small><h3>${esc(g.name)}</h3></div>
+        <ul>${g.bullets.map(bullet => `<li>${esc(bullet)}</li>`).join('')}</ul>
       </article>
     </section>`;
 
-  /* ---- Education ---- */
   const e = cv.education;
-  const edu = `
-    <section class="cv-section">
-      ${sectionHead(e.number, e.label)}
-      ${e.schools.map(s => `
-        <article class="cv-entry reveal">
-          <div class="cv-entry-head">
-            <h3>${esc(s.degree)}<span>.</span></h3>
-            <p>${esc(s.school)}</p>
-          </div>
-          <div class="cv-entry-body">
-            <ul><li>${esc(s.period)} · ${esc(s.grade)}</li></ul>
-          </div>
-        </article>`).join("")}
-      <div class="cv-certs reveal">
-        ${e.certs.map(c => `
-          <div class="cv-cert">
-            <strong>${esc(c.title)}</strong>
-            ${c.detail ? `<p>${esc(c.detail)}</p>` : ""}
-          </div>`).join("")}
+  const education = `
+    <section class="cv-block cv-shell cv-split-block">
+      <div>
+        ${sectionHead(e.number, 'EDUCATION')}
+        <div class="cv-school-list">
+          ${e.schools.map(school => `
+            <article class="cv-school reveal">
+              <span>${esc(school.period)}</span>
+              <h3>${esc(school.degree)}</h3>
+              <p>${esc(school.school)}</p>
+              <strong>${esc(school.grade)}</strong>
+            </article>`).join('')}
+        </div>
+      </div>
+      <div>
+        ${sectionHead('05B', 'CERTIFICATIONS')}
+        <div class="cv-cert-list">
+          ${e.certs.map(cert => `
+            <article class="cv-cert reveal"><i data-lucide="badge-check"></i><div><h3>${esc(cert.title)}</h3>${cert.detail ? `<p>${esc(cert.detail)}</p>` : ''}</div></article>`).join('')}
+        </div>
       </div>
     </section>`;
 
-  /* ---- Skills ---- */
   const s = cv.skills;
   const skills = `
-    <section class="cv-section">
+    <section class="cv-block cv-shell">
       ${sectionHead(s.number, s.label)}
-      <div class="cv-skills reveal">
-        ${s.groups.map(grp => `
-          <div class="cv-skill-group">
-            <small>${esc(grp.category)}</small>
-            <div class="chips">${grp.items.map(i => `<span>${esc(i)}</span>`).join("")}</div>
-          </div>`).join("")}
+      <div class="cv-skills-grid reveal">
+        ${s.groups.map(group => `<div><small>${esc(group.category)}</small>${chips(group.items)}</div>`).join('')}
       </div>
     </section>`;
 
-  /* ---- Languages ---- */
   const l = cv.languages;
-  const langs = `
-    <section class="cv-section">
+  const languages = `
+    <section class="cv-block cv-shell cv-language-block">
       ${sectionHead(l.number, l.label)}
-      <div class="cv-langs reveal">
-        ${l.items.map(i => `<div class="cv-lang"><strong>${esc(i.name)}</strong><span>${esc(i.level)}</span></div>`).join("")}
-      </div>
+      <div>${l.items.map(item => `<p><strong>${esc(item.name)}</strong><span>${esc(item.level)}</span></p>`).join('')}</div>
     </section>`;
 
-  /* ---- Contact ---- */
   const contact = `
-    <section class="section contact">
-      <div class="contact-inner reveal">
-        <span class="section-label">GET IN TOUCH</span>
-        <h2>Let's talk<span>.</span></h2>
-        <p>Have a hard problem? Let's turn it into something people can actually use.</p>
-        <a class="contact-email" href="mailto:${esc(b.email)}">${esc(b.email)} <span>↗</span></a>
-        <div class="socials"><a href="index.html">Portfolio</a><a href="${esc(b.linkedin)}" target="_blank" rel="noopener">LinkedIn</a><a href="${esc(b.pdf)}" download>Download CV</a></div>
-      </div>
+    <section class="cv-cta">
+      <small>AVAILABLE / REMOTE OR RELOCATION</small>
+      <h2>Let’s build something<br><em>useful.</em></h2>
+      <a href="mailto:${esc(b.email)}">${esc(b.email)} <i data-lucide="arrow-up-right"></i></a>
     </section>`;
 
-  document.getElementById("cv-root").innerHTML =
-    hero + profile + projects + ds + grad + edu + skills + langs + contact;
+  document.getElementById('cv-root').innerHTML = hero + intro + projects + dataScience + graduation + education + skills + languages + contact;
+  if (window.lucide) window.lucide.createIcons();
 })();

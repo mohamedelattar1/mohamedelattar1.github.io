@@ -8,21 +8,22 @@ window.CV = {
 
   basics: {
     name: "Mohamed Magdy Elattar",
-    title: "AI Engineer · Software Engineer · Machine Learning & Data Science",
-    location: "New Cairo · Alexandria, Egypt",
+    title: "Junior AI Engineer · Applied Machine Learning · AI Product Development",
+    location: "Cairo / Alexandria, Egypt · Remote or relocation",
     phone: "+20 112 613 6967",
     phoneHref: "tel:+201126136967",
-    email: "mohedelattar25@gmail.com",
+    email: "mohedelattar25w@gmail.com",
     linkedin: "https://www.linkedin.com/in/mohamed-elattar-706893261/",
+    portfolio: "https://mohamedelattar1.github.io/",
     pdf: "assets/mohamed-elattar-cv.pdf"
   },
 
-  profile: "Computer Science graduate and independent builder specializing in applied machine learning, agentic AI, and full-stack SaaS product development. Sole technical lead and architect across a broad portfolio spanning a multi-tenant pharmacy SaaS platform, multi-agent AI systems, IoT platforms, and computer-vision models. Strong foundation in Python, SQL, TensorFlow, LLM API integration, and cloud/IoT deployment, with a self-driven approach to designing, architecting, and building working products end to end.",
+  profile: "2024 Computer Science graduate and independent builder focused on applied machine learning, agentic AI, and full-stack AI products. Built self-directed projects spanning a multi-tenant pharmacy platform, multi-agent systems, IoT monitoring, automation, and computer vision. Strong foundation in Python, SQL, TensorFlow, LLM APIs, and modern web development, with the curiosity and discipline to take ideas from architecture to working prototypes.",
 
   projects: {
     number: "02",
-    label: "INDEPENDENT PROJECTS & FREELANCE WORK",
-    role: "Founder / Lead Developer — Self-Directed",
+    label: "SELECTED AI & SOFTWARE PROJECTS",
+    role: "Independent Project Builder",
     period: "2023 – Present",
     items: [
       {
@@ -32,8 +33,7 @@ window.CV = {
         bullets: [
           "Architected and built a multi-tenant SaaS platform for Egyptian multi-branch pharmacy chains, migrating the system from an initial Firebase/Firestore prototype to a relational Postgres/Supabase stack to support complex role-based access and reporting.",
           "Designed a seven-tier role hierarchy enforced end-to-end with Postgres Row-Level Security (RLS), covering branch-, chain-, and account-level data isolation.",
-          "Ran a full security and performance audit (RLS gap analysis, unfiltered realtime subscriptions, cron/backup scheduling, capacity modeling) and produced a hardening roadmap raising the platform's readiness score from ~6/10 to a projected 8+/10.",
-          "Developed the tiered pricing model and financial plan (per-branch pricing, break-even and margin analysis, VAT-threshold planning) and a competitive analysis against 7 Egyptian pharmacy-software incumbents to prepare the product for pilot sales."
+          "Audited RLS, realtime subscriptions, backups, and capacity; produced a practical hardening roadmap and researched pricing and local competitors to prepare the product for pilot use."
         ]
       },
       {
