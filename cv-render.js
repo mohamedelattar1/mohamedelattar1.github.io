@@ -26,7 +26,7 @@
         <p class="cv-title">${esc(b.title)}</p>
         <div class="cv-cover-actions">
           <a class="button button-primary" href="${esc(b.pdf)}" download="Mohamed-Elattar-CV.pdf"><i data-lucide="download"></i> Download PDF</a>
-          <a class="button button-quiet" href="${esc(b.portfolio)}"><i data-lucide="layout-grid"></i> Portfolio</a>
+          <a class="button button-quiet" href="${esc(b.portfolio)}" target="_blank" rel="noopener"><i data-lucide="layout-grid"></i> Portfolio</a>
         </div>
       </div>
       <div class="cv-cover-photo"><img src="assets/portrait-color.png" alt="Mohamed Elattar"></div>
@@ -34,7 +34,7 @@
         <span>${esc(b.location)}</span>
         <a href="mailto:${esc(b.email)}">${esc(b.email)}</a>
         <a href="${esc(b.phoneHref)}">${esc(b.phone)}</a>
-        <a href="${esc(b.portfolio)}">Portfolio <i data-lucide="arrow-up-right"></i></a>
+        <a href="${esc(b.portfolio)}" target="_blank" rel="noopener">Portfolio <i data-lucide="arrow-up-right"></i></a>
         <a href="${esc(b.linkedin)}" target="_blank" rel="noopener">LinkedIn <i data-lucide="arrow-up-right"></i></a>
       </div>
     </section>`;
