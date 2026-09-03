@@ -15,11 +15,12 @@
   <title>Mohamed Elattar | AI Product Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=12">
+  <link rel="stylesheet" href="home.css?v=1">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 </head>
-<body>
+<body class="home-page">
   <div class="scroll-progress" aria-hidden="true"></div>
   <a class="skip-link" href="#work">Skip to selected work</a>
 
@@ -32,6 +33,7 @@
       <a href="#work">Work</a>
       <a href="#profile">Profile</a>
       <a href="#lab">AI lab</a>
+      <a href="#contact">Contact</a>
     </nav>
     <div class="header-actions">
       <a class="header-link" href="cv.html" aria-label="View Mohamed Elattar's CV">View CV</a>
@@ -50,25 +52,36 @@
 
   <main id="top">
     <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-backdrop" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
+        <div class="hero-cursor-light"></div>
+      </div>
       <div class="hero-media" aria-hidden="true">
         <img class="hero-portrait" src="assets/portrait-color.png" alt="" width="1536" height="1536">
         <div class="portrait-scan"></div>
       </div>
       <div class="hero-content">
-        <div class="availability"><span></span> Open to junior AI roles, remote or relocation</div>
-        <p class="hero-role">AI PRODUCT ENGINEER / CAIRO, EGYPT</p>
-        <h1 id="heroTitle">Mohamed<br>Elattar<span>.</span></h1>
-        <p class="hero-statement">I turn AI ideas into <em>working products</em>: agent systems, operational SaaS, data workflows, and interfaces people can actually use.</p>
+        <div class="availability"><span></span> Available for AI software roles</div>
+        <p class="hero-role">MOHAMED ELATTAR / AI PRODUCT ENGINEER</p>
+        <h1 id="heroTitle"><span>AI</span> systems<br>with product<br>instinct.</h1>
+        <p class="hero-statement">I build the layer between promising models and usable software: agent workflows, business platforms, data products, and interfaces that make the intelligence visible.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#work">See selected work <i data-lucide="arrow-down-right"></i></a>
-          <button class="button button-quiet js-open-avatar" type="button"><i data-lucide="user-round"></i> Meet Mohamed</button>
+          <a class="button button-primary" href="#work">Enter the work <i data-lucide="arrow-down-right"></i></a>
+          <a class="button button-quiet" href="cv.html"><i data-lucide="file-text"></i> View CV</a>
         </div>
         <div class="hero-proof" aria-label="Profile highlights">
-          <div><strong>01</strong><span>Production-minded<br>SaaS platform</span></div>
-          <div><strong>11</strong><span>Agent architecture<br>designed</span></div>
-          <div><strong>10+</strong><span>AI, ML and data<br>projects</span></div>
+          <div><strong>01</strong><span>Flagship SaaS<br>system</span></div>
+          <div><strong>11</strong><span>Agent roles<br>designed</span></div>
+          <div><strong>10+</strong><span>AI and data<br>projects</span></div>
         </div>
       </div>
+      <aside class="hero-console" aria-label="Portfolio signal">
+        <div class="console-top"><span>FIT SCORE</span><strong>93%</strong></div>
+        <div class="console-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <p>Best match: applied AI, internal tools, SaaS platforms, automation, and product engineering.</p>
+      </aside>
       <div class="hero-side-note"><span>BUILDING AT THE EDGE OF</span><strong>AI / PRODUCT / SYSTEMS</strong></div>
       <a class="hero-scroll" href="#work" aria-label="Scroll to work"><i data-lucide="arrow-down"></i></a>
     </section>
@@ -83,8 +96,8 @@
     <section class="section work-section" id="work">
       <div class="section-heading reveal">
         <div class="section-id"><span>01</span> SELECTED WORK</div>
-        <h2>Evidence over<br><em>job titles.</em></h2>
-        <p>Self-directed products built around real operational constraints, not tutorial-sized problems.</p>
+        <h2>Not projects.<br><em>Proof systems.</em></h2>
+        <p>Each piece shows a different kind of judgment: product scope, data integrity, AI architecture, operational UX, and shipping discipline.</p>
       </div>
 
       <article class="feature-project reveal">
@@ -104,6 +117,10 @@
         <div class="product-viewer" id="productViewer">
           <div class="viewer-topline"><span id="viewerLabel">MERIDIAN / DASHBOARD</span><span id="viewerCount">01 / 06</span></div>
           <div class="viewer-stage" id="viewerStage" aria-live="polite"></div>
+          <div class="viewer-caption">
+            <strong>Operational clarity</strong>
+            <span>Dashboards, inventory, Arabic POS, analytics, and finance built as one branch-aware workflow.</span>
+          </div>
           <div class="viewer-controls">
             <div class="viewer-tabs" id="viewerTabs" role="tablist" aria-label="Meridian product screens"></div>
             <div class="viewer-arrows">
@@ -173,9 +190,36 @@
       </div>
     </section>
 
+    <section class="section command-section" aria-labelledby="commandTitle">
+      <div class="command-shell reveal">
+        <div class="command-copy">
+          <div class="section-id"><span>02</span> SMART SIGNAL</div>
+          <h2 id="commandTitle">Choose what you care about.</h2>
+          <p>Recruiters and founders do not read portfolios the same way. This panel changes the pitch around the signal you are scanning for.</p>
+        </div>
+        <div class="signal-console" data-active-signal="ai">
+          <div class="signal-options" role="tablist" aria-label="Portfolio signal filters">
+            <button class="active" type="button" role="tab" aria-selected="true" data-signal="ai">AI systems</button>
+            <button type="button" role="tab" aria-selected="false" data-signal="product">Product sense</button>
+            <button type="button" role="tab" aria-selected="false" data-signal="ship">Shipping</button>
+          </div>
+          <div class="signal-readout" aria-live="polite">
+            <span id="signalKicker">PRIMARY SIGNAL</span>
+            <h3 id="signalTitle">Turns AI concepts into working product loops.</h3>
+            <p id="signalText">LegalMind, FitAI, and Meridian show practical orchestration: retrieval, classification, workflows, interfaces, and evaluation-minded thinking.</p>
+          </div>
+          <div class="signal-meter" aria-hidden="true">
+            <span style="--value: 92%"><b>Architecture</b><i></i></span>
+            <span style="--value: 84%"><b>UX judgment</b><i></i></span>
+            <span style="--value: 88%"><b>Execution</b><i></i></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section profile-section" id="profile">
       <div class="profile-intro reveal">
-        <div class="section-id"><span>02</span> PROFILE</div>
+        <div class="section-id"><span>03</span> PROFILE</div>
         <h2>Early career.<br><em>Serious range.</em></h2>
       </div>
       <div class="profile-grid">
@@ -194,7 +238,7 @@
 
     <section class="section lab-section" id="lab">
       <div class="section-heading reveal">
-        <div class="section-id"><span>03</span> AI / DATA LAB</div>
+        <div class="section-id"><span>04</span> AI / DATA LAB</div>
         <h2>Models are useful<br>when they <em>answer back.</em></h2>
         <p>A working range across vision, forecasting, classification, clustering, and applied data products.</p>
       </div>
@@ -209,7 +253,7 @@
 
     <section class="contact-section" id="contact">
       <div class="contact-copy reveal">
-        <div class="section-id"><span>04</span> CONTACT</div>
+        <div class="section-id"><span>05</span> CONTACT</div>
         <h2>Let's build the<br><em>useful version.</em></h2>
         <p>Available for junior AI engineering, applied AI, and AI software roles.</p>
       </div>
@@ -230,6 +274,7 @@
 
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script src="script.js?v=12"></script>
+  <script src="home.js?v=1"></script>
   <script src="fun.js?v=12"></script>
 </body>
 </html>

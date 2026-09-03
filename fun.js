@@ -90,7 +90,7 @@
   const progress = widget.querySelector('.guide-progress');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let activeIndex = 0;
-  let manuallyCollapsed = window.matchMedia('(max-width: 800px)').matches;
+  let manuallyCollapsed = true;
 
   progress.innerHTML = steps.map(() => '<i></i>').join('');
 
